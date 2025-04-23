@@ -31,7 +31,7 @@
             this.btnPengguna = new System.Windows.Forms.Button();
             this.btnSparepart = new System.Windows.Forms.Button();
             this.btnTransaksi = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnDetail = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnPengguna
@@ -64,21 +64,22 @@
             this.btnTransaksi.UseVisualStyleBackColor = true;
             this.btnTransaksi.Click += new System.EventHandler(this.btnTransaksi_Click);
             // 
-            // button1
+            // btnDetail
             // 
-            this.button1.Location = new System.Drawing.Point(343, 281);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(110, 41);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Detail";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnDetail.Location = new System.Drawing.Point(343, 281);
+            this.btnDetail.Name = "btnDetail";
+            this.btnDetail.Size = new System.Drawing.Size(110, 41);
+            this.btnDetail.TabIndex = 3;
+            this.btnDetail.Text = "Detail";
+            this.btnDetail.UseVisualStyleBackColor = true;
+            this.btnDetail.Click += new System.EventHandler(this.button1_Click);
             // 
             // Beranda
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnDetail);
             this.Controls.Add(this.btnTransaksi);
             this.Controls.Add(this.btnSparepart);
             this.Controls.Add(this.btnPengguna);
@@ -94,6 +95,6 @@
         private System.Windows.Forms.Button btnPengguna;
         private System.Windows.Forms.Button btnSparepart;
         private System.Windows.Forms.Button btnTransaksi;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnDetail;
     }
 }
