@@ -76,7 +76,7 @@ namespace Sparepart_Motor
                     {
                         cmd.Parameters.AddWithValue("@Id_Detail", txtId_Detail.Text.Trim());
                         cmd.Parameters.AddWithValue("@Id_Transaksi", txtId_Transaksi.Text.Trim());
-                        cmd.Parameters.AddWithValue("@IdBarang", txtId_Barang.Text.Trim());
+                        cmd.Parameters.AddWithValue("@Id_Barang", txtId_Barang.Text.Trim());
                         cmd.Parameters.AddWithValue("@Jumlah", txtJumlah.Text.Trim());
                         cmd.Parameters.AddWithValue("@Harga_Satuan", txtHarga_Satuan.Text.Trim());
 
@@ -181,7 +181,7 @@ namespace Sparepart_Motor
                     }
 
                     conn.Open();
-                    string query = "UPDATE Detail_Pembelian SET Id_Transaksi = @Id_Transaksi, Email = @Email, Telepon = @Telepon, Alamat = @Alamat WHERE Id_Pengguna = @Id_Pengguna";
+                    string query = "UPDATE Detail_Pembelian SET Id_Detail = @Id_Detail, Id_Barang = @Id_Barang, Jumlah = @Jumlah, Harga_Satuan = @Harga_Satuan WHERE Id_Detail = @Id_Detail";
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@Id_Detail", txtId_Detail.Text.Trim());
@@ -211,6 +211,11 @@ namespace Sparepart_Motor
         }
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void txtId_Barang_TextChanged(object sender, EventArgs e)
         {
 
         }

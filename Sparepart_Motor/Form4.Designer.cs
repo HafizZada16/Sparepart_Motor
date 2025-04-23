@@ -34,11 +34,11 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.txtId_Detail = new System.Windows.Forms.TextBox();
             this.txtId_Transaksi = new System.Windows.Forms.TextBox();
-            this.txtId_Barang = new System.Windows.Forms.TextBox();
             this.txtJumlah = new System.Windows.Forms.TextBox();
             this.txtHarga_Satuan = new System.Windows.Forms.TextBox();
+            this.txtId_Detail = new System.Windows.Forms.TextBox();
+            this.txtId_Barang = new System.Windows.Forms.TextBox();
             this.bttnTambah = new System.Windows.Forms.Button();
             this.bttnHapus = new System.Windows.Forms.Button();
             this.bttnUbah = new System.Windows.Forms.Button();
@@ -120,26 +120,12 @@
             this.label5.TabIndex = 4;
             this.label5.Text = "Harga_Satuan";
             // 
-            // txtId_Detail
-            // 
-            this.txtId_Detail.Location = new System.Drawing.Point(202, 3);
-            this.txtId_Detail.Name = "txtId_Detail";
-            this.txtId_Detail.Size = new System.Drawing.Size(194, 22);
-            this.txtId_Detail.TabIndex = 5;
-            // 
             // txtId_Transaksi
             // 
             this.txtId_Transaksi.Location = new System.Drawing.Point(202, 42);
             this.txtId_Transaksi.Name = "txtId_Transaksi";
             this.txtId_Transaksi.Size = new System.Drawing.Size(194, 22);
             this.txtId_Transaksi.TabIndex = 6;
-            // 
-            // txtId_Barang
-            // 
-            this.txtId_Barang.Location = new System.Drawing.Point(202, 81);
-            this.txtId_Barang.Name = "txtId_Barang";
-            this.txtId_Barang.Size = new System.Drawing.Size(194, 22);
-            this.txtId_Barang.TabIndex = 7;
             // 
             // txtJumlah
             // 
@@ -154,6 +140,21 @@
             this.txtHarga_Satuan.Name = "txtHarga_Satuan";
             this.txtHarga_Satuan.Size = new System.Drawing.Size(194, 22);
             this.txtHarga_Satuan.TabIndex = 9;
+            // 
+            // txtId_Detail
+            // 
+            this.txtId_Detail.Location = new System.Drawing.Point(202, 3);
+            this.txtId_Detail.Name = "txtId_Detail";
+            this.txtId_Detail.Size = new System.Drawing.Size(194, 22);
+            this.txtId_Detail.TabIndex = 5;
+            // 
+            // txtId_Barang
+            // 
+            this.txtId_Barang.Location = new System.Drawing.Point(202, 81);
+            this.txtId_Barang.Name = "txtId_Barang";
+            this.txtId_Barang.Size = new System.Drawing.Size(194, 22);
+            this.txtId_Barang.TabIndex = 7;
+            this.txtId_Barang.TextChanged += new System.EventHandler(this.txtId_Barang_TextChanged);
             // 
             // bttnTambah
             // 
@@ -194,7 +195,6 @@
             this.bttnRefresh.Text = "Refresh";
             this.bttnRefresh.UseVisualStyleBackColor = true;
             this.bttnRefresh.Click += new System.EventHandler(this.BtnRefresh);
-            this.dgvSparepart.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSparepart_CellContentClick);
             // 
             // dgvSparepart
             // 
@@ -205,6 +205,7 @@
             this.dgvSparepart.RowTemplate.Height = 24;
             this.dgvSparepart.Size = new System.Drawing.Size(776, 170);
             this.dgvSparepart.TabIndex = 5;
+            this.dgvSparepart.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSparepart_CellContentClick);
             // 
             // Form4
             // 
@@ -219,9 +220,9 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Form4";
             this.Text = "Form4";
+            this.Load += new System.EventHandler(this.Form4_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.Load += new System.EventHandler(this.Form4_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvSparepart)).EndInit();
             this.ResumeLayout(false);
 
