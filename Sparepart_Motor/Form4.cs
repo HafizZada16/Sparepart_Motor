@@ -41,7 +41,7 @@ namespace Sparepart_Motor
                 try
                 {
                     conn.Open();
-                    string query = "SELECT Id_Detail, Id_Transaksi, Id_Barang, Jumlah, Harga_Satuan FROM Detail_Pembelian";
+                    string query = "SELECT Id_Detail, Id_Transaksi, Id_Barang, Jumlah, Harga_Satuan, Subtotal FROM Detail_Pembelian";
                     SqlDataAdapter da = new SqlDataAdapter(query, conn);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
@@ -186,7 +186,7 @@ namespace Sparepart_Motor
                     {
                         cmd.Parameters.AddWithValue("@Id_Detail", txtId_Detail.Text.Trim());
                         cmd.Parameters.AddWithValue("@Id_Transaksi", txtId_Transaksi.Text.Trim());
-                        cmd.Parameters.AddWithValue("@IdBarang", txtId_Barang.Text.Trim());
+                        cmd.Parameters.AddWithValue("@Id_Barang", txtId_Barang.Text.Trim());
                         cmd.Parameters.AddWithValue("@Jumlah", txtJumlah.Text.Trim());
                         cmd.Parameters.AddWithValue("@Harga_Satuan", txtHarga_Satuan.Text.Trim());
 
