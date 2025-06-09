@@ -18,9 +18,9 @@ namespace Sparepart_Motor
         private void btnLogin_Click(object sender, EventArgs e)
         {
             // Memeriksa apakah input username dan password kosong
-            if (string.IsNullOrEmpty(txtUsername.Text) || string.IsNullOrEmpty(txtPassword.Text))
+            if (string.IsNullOrEmpty(txtEmail.Text) || string.IsNullOrEmpty(txtPassword.Text))
             {
-                MessageBox.Show("Username dan Password harus diisi.", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Email dan Password harus diisi.", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -32,11 +32,11 @@ namespace Sparepart_Motor
                     // Query untuk memeriksa kecocokan data dari tabel Pengguna
                     // Username dicocokkan dengan kolom 'Nama'
                     // Password dicocokkan dengan kolom 'Id_Pengguna'
-                    string query = "SELECT * FROM Pengguna WHERE Nama = @Username AND Password" +
+                    string query = "SELECT * FROM Pengguna WHERE Email = @Email AND Password" +
                         " = @Password";
 
                     SqlDataAdapter sda = new SqlDataAdapter(query, conn);
-                    sda.SelectCommand.Parameters.AddWithValue("@Username", txtUsername.Text.Trim());
+                    sda.SelectCommand.Parameters.AddWithValue("@Email", txtEmail.Text.Trim());
                     sda.SelectCommand.Parameters.AddWithValue("@Password", txtPassword.Text.Trim());
 
                     DataTable dt = new DataTable();
@@ -57,10 +57,10 @@ namespace Sparepart_Motor
                     }
                     else
                     {
-                        MessageBox.Show("Username atau Password salah.", "Gagal", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Email atau Password salah.", "Gagal", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         txtPassword.Clear();
-                        txtUsername.Clear();
-                        txtUsername.Focus();
+                        txtEmail.Clear();
+                        txtEmail.Focus();
                     }
                 }
                 catch (Exception ex)
