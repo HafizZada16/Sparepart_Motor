@@ -16,7 +16,7 @@ namespace Sparepart_Motor
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Beranda());
+            Application.Run(new Login());
         }
     }
 }
