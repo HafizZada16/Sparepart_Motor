@@ -28,6 +28,7 @@ namespace Sparepart_Motor
             txtId_Pengguna.Clear();
             txtNama.Clear();
             txtEmail.Clear();
+            txtPassword.Clear();
             txtTelepon.Clear();
             txtAlamat.Clear();
 
@@ -41,7 +42,7 @@ namespace Sparepart_Motor
                 try
                 {
                     conn.Open();
-                    string query = "SELECT Id_Pengguna, Nama, Email, Telepon, Alamat FROM Pengguna";
+                    string query = "SELECT Id_Pengguna, Nama, Email, Password, Telepon, Alamat FROM Pengguna";
                     SqlDataAdapter da = new SqlDataAdapter(query, conn);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
@@ -64,19 +65,20 @@ namespace Sparepart_Motor
             {
                 try
                 {
-                    if (txtId_Pengguna.Text == "" || txtNama.Text == "" || txtEmail.Text == "" || txtTelepon.Text == "" || txtAlamat.Text == "")
+                    if (txtId_Pengguna.Text == "" || txtNama.Text == "" || txtEmail.Text == "" || txtPassword.Text == "" || txtTelepon.Text == "" || txtAlamat.Text == "")
                     {
                         MessageBox.Show("Harap isi semua data!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
                     conn.Open();
-                    string query = "INSERT INTO Pengguna (Id_Pengguna, Nama, Email, Telepon, Alamat) VALUES (@Id_Pengguna, @Nama, @Email, @Telepon, @Alamat)";
+                    string query = "INSERT INTO Pengguna (Id_Pengguna, Nama, Email, Password, Telepon, Alamat) VALUES (@Id_Pengguna, @Nama, @Email, @Password, @Telepon, @Alamat)";
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@Id_Pengguna", txtId_Pengguna.Text.Trim());
                         cmd.Parameters.AddWithValue("@Nama", txtNama.Text.Trim());
                         cmd.Parameters.AddWithValue("@Email", txtEmail.Text.Trim());
+                        cmd.Parameters.AddWithValue("@Password", txtEmail.Text.Trim());
                         cmd.Parameters.AddWithValue("@Telepon", txtTelepon.Text.Trim());
                         cmd.Parameters.AddWithValue("@Alamat", txtAlamat.Text.Trim());
 
@@ -163,8 +165,9 @@ namespace Sparepart_Motor
                 txtId_Pengguna.Text = row.Cells[0].Value.ToString();
                 txtNama.Text = row.Cells[1].Value?.ToString();
                 txtEmail.Text = row.Cells[2].Value?.ToString();
-                txtTelepon.Text = row.Cells[3].Value?.ToString();
-                txtAlamat.Text = row.Cells[4].Value?.ToString();
+                txtPassword.Text = row.Cells[3].Value?.ToString();
+                txtTelepon.Text = row.Cells[4].Value?.ToString();
+                txtAlamat.Text = row.Cells[5].Value?.ToString();
             }
         }
 
@@ -174,19 +177,20 @@ namespace Sparepart_Motor
             {
                 try
                 {
-                    if (txtId_Pengguna.Text == "" || txtNama.Text == "" || txtEmail.Text == "" || txtTelepon.Text == "" || txtAlamat.Text == "")
+                    if (txtId_Pengguna.Text == "" || txtNama.Text == "" || txtEmail.Text == "" || txtPassword.Text == "" || txtTelepon.Text == "" || txtAlamat.Text == "")
                     {
                         MessageBox.Show("Harap isi semua data!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
                     conn.Open();
-                    string query = "UPDATE Pengguna SET Nama = @Nama, Email = @Email, Telepon = @Telepon, Alamat = @Alamat WHERE Id_Pengguna = @Id_Pengguna";
+                    string query = "UPDATE Pengguna SET Nama = @Nama, Email = @Email, Password = @Password, Telepon = @Telepon, Alamat = @Alamat WHERE Id_Pengguna = @Id_Pengguna";
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
                         cmd.Parameters.AddWithValue("@Id_Pengguna", txtId_Pengguna.Text.Trim());
                         cmd.Parameters.AddWithValue("@Nama", txtNama.Text.Trim());
                         cmd.Parameters.AddWithValue("@Email", txtEmail.Text.Trim());
+                        cmd.Parameters.AddWithValue("@Password", txtEmail.Text.Trim());
                         cmd.Parameters.AddWithValue("@Telepon", txtTelepon.Text.Trim());
                         cmd.Parameters.AddWithValue("@Alamat", txtAlamat.Text.Trim());
 

@@ -44,6 +44,8 @@
             this.bttnUbah = new System.Windows.Forms.Button();
             this.bttnRefresh = new System.Windows.Forms.Button();
             this.dgvSparepart = new System.Windows.Forms.DataGridView();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtPassword = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSparepart)).BeginInit();
             this.SuspendLayout();
@@ -56,28 +58,31 @@
             this.tableLayoutPanel1.Controls.Add(this.txt3, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.txt1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.txt2, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.txt4, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.txtId_Pengguna, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.txtNama, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.txtEmail, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.txtTelepon, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.txtAlamat, 1, 4);
-            this.tableLayoutPanel1.Controls.Add(this.txt5, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.txt5, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.txtAlamat, 1, 5);
+            this.tableLayoutPanel1.Controls.Add(this.txt4, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.txtTelepon, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.txtPassword, 1, 3);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(59, 38);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 5;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.tableLayoutPanel1.RowCount = 6;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(326, 247);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // txt3
             // 
             this.txt3.AutoSize = true;
-            this.txt3.Location = new System.Drawing.Point(3, 98);
+            this.txt3.Location = new System.Drawing.Point(3, 82);
             this.txt3.Name = "txt3";
             this.txt3.Size = new System.Drawing.Size(41, 16);
             this.txt3.TabIndex = 1;
@@ -95,7 +100,7 @@
             // txt2
             // 
             this.txt2.AutoSize = true;
-            this.txt2.Location = new System.Drawing.Point(3, 49);
+            this.txt2.Location = new System.Drawing.Point(3, 41);
             this.txt2.Name = "txt2";
             this.txt2.Size = new System.Drawing.Size(44, 16);
             this.txt2.TabIndex = 1;
@@ -104,7 +109,7 @@
             // txt4
             // 
             this.txt4.AutoSize = true;
-            this.txt4.Location = new System.Drawing.Point(3, 147);
+            this.txt4.Location = new System.Drawing.Point(3, 164);
             this.txt4.Name = "txt4";
             this.txt4.Size = new System.Drawing.Size(58, 16);
             this.txt4.TabIndex = 2;
@@ -119,28 +124,28 @@
             // 
             // txtNama
             // 
-            this.txtNama.Location = new System.Drawing.Point(166, 52);
+            this.txtNama.Location = new System.Drawing.Point(166, 44);
             this.txtNama.Name = "txtNama";
             this.txtNama.Size = new System.Drawing.Size(157, 22);
             this.txtNama.TabIndex = 4;
             // 
             // txtEmail
             // 
-            this.txtEmail.Location = new System.Drawing.Point(166, 101);
+            this.txtEmail.Location = new System.Drawing.Point(166, 85);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(157, 22);
             this.txtEmail.TabIndex = 5;
             // 
             // txtTelepon
             // 
-            this.txtTelepon.Location = new System.Drawing.Point(166, 150);
+            this.txtTelepon.Location = new System.Drawing.Point(166, 167);
             this.txtTelepon.Name = "txtTelepon";
             this.txtTelepon.Size = new System.Drawing.Size(157, 22);
             this.txtTelepon.TabIndex = 6;
             // 
             // txtAlamat
             // 
-            this.txtAlamat.Location = new System.Drawing.Point(166, 199);
+            this.txtAlamat.Location = new System.Drawing.Point(166, 208);
             this.txtAlamat.Name = "txtAlamat";
             this.txtAlamat.Size = new System.Drawing.Size(157, 22);
             this.txtAlamat.TabIndex = 7;
@@ -148,7 +153,7 @@
             // txt5
             // 
             this.txt5.AutoSize = true;
-            this.txt5.Location = new System.Drawing.Point(3, 196);
+            this.txt5.Location = new System.Drawing.Point(3, 205);
             this.txt5.Name = "txt5";
             this.txt5.Size = new System.Drawing.Size(49, 16);
             this.txt5.TabIndex = 8;
@@ -205,6 +210,22 @@
             this.dgvSparepart.TabIndex = 5;
             this.dgvSparepart.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSparepart_CellContentClick);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 123);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(67, 16);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Password";
+            // 
+            // txtPassword
+            // 
+            this.txtPassword.Location = new System.Drawing.Point(166, 126);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.Size = new System.Drawing.Size(157, 22);
+            this.txtPassword.TabIndex = 10;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -244,8 +265,8 @@
         private System.Windows.Forms.Button bttnUbah;
         private System.Windows.Forms.Button bttnRefresh;
         private System.Windows.Forms.DataGridView dgvSparepart;
-
-        
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtPassword;
     }
 }
 
