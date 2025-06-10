@@ -32,20 +32,21 @@
             this.txt3 = new System.Windows.Forms.Label();
             this.txt1 = new System.Windows.Forms.Label();
             this.txt2 = new System.Windows.Forms.Label();
-            this.txt4 = new System.Windows.Forms.Label();
             this.txtId_Pengguna = new System.Windows.Forms.TextBox();
             this.txtNama = new System.Windows.Forms.TextBox();
             this.txtEmail = new System.Windows.Forms.TextBox();
-            this.txtTelepon = new System.Windows.Forms.TextBox();
-            this.txtAlamat = new System.Windows.Forms.TextBox();
             this.txt5 = new System.Windows.Forms.Label();
+            this.txtAlamat = new System.Windows.Forms.TextBox();
+            this.txt4 = new System.Windows.Forms.Label();
+            this.txtTelepon = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtPassword = new System.Windows.Forms.TextBox();
             this.bttnTambah = new System.Windows.Forms.Button();
             this.bttnHapus = new System.Windows.Forms.Button();
             this.bttnUbah = new System.Windows.Forms.Button();
             this.bttnRefresh = new System.Windows.Forms.Button();
             this.dgvSparepart = new System.Windows.Forms.DataGridView();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtPassword = new System.Windows.Forms.TextBox();
+            this.btnImport = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSparepart)).BeginInit();
             this.SuspendLayout();
@@ -106,15 +107,6 @@
             this.txt2.TabIndex = 1;
             this.txt2.Text = "Nama";
             // 
-            // txt4
-            // 
-            this.txt4.AutoSize = true;
-            this.txt4.Location = new System.Drawing.Point(3, 164);
-            this.txt4.Name = "txt4";
-            this.txt4.Size = new System.Drawing.Size(58, 16);
-            this.txt4.TabIndex = 2;
-            this.txt4.Text = "Telepon";
-            // 
             // txtId_Pengguna
             // 
             this.txtId_Pengguna.Location = new System.Drawing.Point(166, 3);
@@ -136,20 +128,6 @@
             this.txtEmail.Size = new System.Drawing.Size(157, 22);
             this.txtEmail.TabIndex = 5;
             // 
-            // txtTelepon
-            // 
-            this.txtTelepon.Location = new System.Drawing.Point(166, 167);
-            this.txtTelepon.Name = "txtTelepon";
-            this.txtTelepon.Size = new System.Drawing.Size(157, 22);
-            this.txtTelepon.TabIndex = 6;
-            // 
-            // txtAlamat
-            // 
-            this.txtAlamat.Location = new System.Drawing.Point(166, 208);
-            this.txtAlamat.Name = "txtAlamat";
-            this.txtAlamat.Size = new System.Drawing.Size(157, 22);
-            this.txtAlamat.TabIndex = 7;
-            // 
             // txt5
             // 
             this.txt5.AutoSize = true;
@@ -158,6 +136,45 @@
             this.txt5.Size = new System.Drawing.Size(49, 16);
             this.txt5.TabIndex = 8;
             this.txt5.Text = "Alamat";
+            // 
+            // txtAlamat
+            // 
+            this.txtAlamat.Location = new System.Drawing.Point(166, 208);
+            this.txtAlamat.Name = "txtAlamat";
+            this.txtAlamat.Size = new System.Drawing.Size(157, 22);
+            this.txtAlamat.TabIndex = 7;
+            // 
+            // txt4
+            // 
+            this.txt4.AutoSize = true;
+            this.txt4.Location = new System.Drawing.Point(3, 164);
+            this.txt4.Name = "txt4";
+            this.txt4.Size = new System.Drawing.Size(58, 16);
+            this.txt4.TabIndex = 2;
+            this.txt4.Text = "Telepon";
+            // 
+            // txtTelepon
+            // 
+            this.txtTelepon.Location = new System.Drawing.Point(166, 167);
+            this.txtTelepon.Name = "txtTelepon";
+            this.txtTelepon.Size = new System.Drawing.Size(157, 22);
+            this.txtTelepon.TabIndex = 6;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 123);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(67, 16);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Password";
+            // 
+            // txtPassword
+            // 
+            this.txtPassword.Location = new System.Drawing.Point(166, 126);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.Size = new System.Drawing.Size(157, 22);
+            this.txtPassword.TabIndex = 10;
             // 
             // bttnTambah
             // 
@@ -210,27 +227,22 @@
             this.dgvSparepart.TabIndex = 5;
             this.dgvSparepart.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSparepart_CellContentClick);
             // 
-            // label1
+            // btnImport
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 123);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(67, 16);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "Password";
-            // 
-            // txtPassword
-            // 
-            this.txtPassword.Location = new System.Drawing.Point(166, 126);
-            this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(157, 22);
-            this.txtPassword.TabIndex = 10;
+            this.btnImport.Location = new System.Drawing.Point(711, 123);
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Size = new System.Drawing.Size(87, 43);
+            this.btnImport.TabIndex = 6;
+            this.btnImport.Text = "Import";
+            this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.btnImportExcel_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(849, 563);
+            this.Controls.Add(this.btnImport);
             this.Controls.Add(this.dgvSparepart);
             this.Controls.Add(this.bttnRefresh);
             this.Controls.Add(this.bttnUbah);
@@ -267,6 +279,7 @@
         private System.Windows.Forms.DataGridView dgvSparepart;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtPassword;
+        private System.Windows.Forms.Button btnImport;
     }
 }
 

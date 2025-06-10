@@ -44,6 +44,7 @@
             this.bttnUbah = new System.Windows.Forms.Button();
             this.bttnRefresh = new System.Windows.Forms.Button();
             this.dgvSparepart = new System.Windows.Forms.DataGridView();
+            this.button1 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSparepart)).BeginInit();
             this.SuspendLayout();
@@ -158,7 +159,7 @@
             // 
             // bttnTambah
             // 
-            this.bttnTambah.Location = new System.Drawing.Point(576, 40);
+            this.bttnTambah.Location = new System.Drawing.Point(523, 31);
             this.bttnTambah.Name = "bttnTambah";
             this.bttnTambah.Size = new System.Drawing.Size(122, 40);
             this.bttnTambah.TabIndex = 1;
@@ -168,7 +169,7 @@
             // 
             // bttnHapus
             // 
-            this.bttnHapus.Location = new System.Drawing.Point(576, 101);
+            this.bttnHapus.Location = new System.Drawing.Point(523, 92);
             this.bttnHapus.Name = "bttnHapus";
             this.bttnHapus.Size = new System.Drawing.Size(122, 36);
             this.bttnHapus.TabIndex = 2;
@@ -178,7 +179,7 @@
             // 
             // bttnUbah
             // 
-            this.bttnUbah.Location = new System.Drawing.Point(576, 160);
+            this.bttnUbah.Location = new System.Drawing.Point(523, 151);
             this.bttnUbah.Name = "bttnUbah";
             this.bttnUbah.Size = new System.Drawing.Size(122, 36);
             this.bttnUbah.TabIndex = 3;
@@ -188,7 +189,7 @@
             // 
             // bttnRefresh
             // 
-            this.bttnRefresh.Location = new System.Drawing.Point(576, 220);
+            this.bttnRefresh.Location = new System.Drawing.Point(523, 211);
             this.bttnRefresh.Name = "bttnRefresh";
             this.bttnRefresh.Size = new System.Drawing.Size(122, 36);
             this.bttnRefresh.TabIndex = 4;
@@ -207,11 +208,22 @@
             this.dgvSparepart.TabIndex = 5;
             this.dgvSparepart.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSparepart_CellContentClick);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(673, 121);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(97, 38);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.btnImportExcel_Click);
+            // 
             // Form4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.dgvSparepart);
             this.Controls.Add(this.bttnRefresh);
             this.Controls.Add(this.bttnUbah);
@@ -246,5 +258,6 @@
         private System.Windows.Forms.Button bttnUbah;
         private System.Windows.Forms.Button bttnRefresh;
         private System.Windows.Forms.DataGridView dgvSparepart;
+        private System.Windows.Forms.Button button1;
     }
 }

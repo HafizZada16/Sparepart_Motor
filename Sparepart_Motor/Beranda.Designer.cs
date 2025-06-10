@@ -42,7 +42,7 @@
             this.btnPengguna.TabIndex = 0;
             this.btnPengguna.Text = "Pengguna";
             this.btnPengguna.UseVisualStyleBackColor = true;
-            this.btnPengguna.Click += new System.EventHandler(this.btnBukaForm1_Click);
+            this.btnPengguna.Click += new System.EventHandler(this.btnPengguna_Click);
             // 
             // btnSparepart
             // 
@@ -52,7 +52,7 @@
             this.btnSparepart.TabIndex = 1;
             this.btnSparepart.Text = "Sparepart";
             this.btnSparepart.UseVisualStyleBackColor = true;
-            this.btnSparepart.Click += new System.EventHandler(this.btnBukaForm2_Click);
+            this.btnSparepart.Click += new System.EventHandler(this.btnSparepart_Click);
             // 
             // btnTransaksi
             // 
@@ -72,7 +72,7 @@
             this.btnDetail.TabIndex = 3;
             this.btnDetail.Text = "Detail";
             this.btnDetail.UseVisualStyleBackColor = true;
-            this.btnDetail.Click += new System.EventHandler(this.button1_Click);
+            this.btnDetail.Click += new System.EventHandler(this.btnDetail_Click);
             // 
             // Beranda
             // 

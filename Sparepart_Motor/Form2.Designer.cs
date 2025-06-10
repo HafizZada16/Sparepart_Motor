@@ -40,6 +40,7 @@
             this.bttnUbah = new System.Windows.Forms.Button();
             this.bttnRefresh = new System.Windows.Forms.Button();
             this.dgvSparepart = new System.Windows.Forms.DataGridView();
+            this.btnImport = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSparepart)).BeginInit();
             this.SuspendLayout();
@@ -163,11 +164,22 @@
             this.dgvSparepart.TabIndex = 5;
             this.dgvSparepart.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSparepart_CellContentClick);
             // 
+            // btnImport
+            // 
+            this.btnImport.Location = new System.Drawing.Point(690, 122);
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Size = new System.Drawing.Size(84, 35);
+            this.btnImport.TabIndex = 6;
+            this.btnImport.Text = "Import";
+            this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.btnImportExcel_Click);
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnImport);
             this.Controls.Add(this.dgvSparepart);
             this.Controls.Add(this.bttnRefresh);
             this.Controls.Add(this.bttnUbah);
@@ -176,9 +188,9 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Form2";
             this.Text = "Sparepart";
+            this.Load += new System.EventHandler(this.Form2_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.Load += new System.EventHandler(this.Form2_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvSparepart)).EndInit();
             this.ResumeLayout(false);
 
@@ -198,7 +210,6 @@
         private System.Windows.Forms.Button bttnUbah;
         private System.Windows.Forms.Button bttnRefresh;
         private System.Windows.Forms.DataGridView dgvSparepart;
-
-       
+        private System.Windows.Forms.Button btnImport;
     }
 }

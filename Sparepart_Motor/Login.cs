@@ -32,10 +32,10 @@ namespace Sparepart_Motor
                     // Query untuk memeriksa kecocokan data dari tabel Pengguna
                     // Username dicocokkan dengan kolom 'Nama'
                     // Password dicocokkan dengan kolom 'Id_Pengguna'
-                    string query = "SELECT * FROM Pengguna WHERE Email = @Email AND Password" +
-                        " = @Password";
+                    string query = "sp_LoginPengguna";
 
                     SqlDataAdapter sda = new SqlDataAdapter(query, conn);
+                    sda.SelectCommand.CommandType = CommandType.StoredProcedure;
                     sda.SelectCommand.Parameters.AddWithValue("@Email", txtEmail.Text.Trim());
                     sda.SelectCommand.Parameters.AddWithValue("@Password", txtPassword.Text.Trim());
 

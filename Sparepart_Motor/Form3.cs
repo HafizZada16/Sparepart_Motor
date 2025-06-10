@@ -8,15 +8,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NPOI.SS.UserModel;
+using System.IO;
 
 namespace Sparepart_Motor
 {
     public partial class Form3 : Form
     {
         private string connectionString = "Data Source=LAPTOP-ITV1OTU4\\HAFIZ16;Initial Catalog=manajemen_sparepart;Integrated Security=True";
+        private OpenFileDialog openFileDialog1;
         public Form3()
         {
             InitializeComponent();
+            openFileDialog1 = new OpenFileDialog();
         }
 
         private void Form3_Load(object sender, EventArgs e)
@@ -27,7 +31,7 @@ namespace Sparepart_Motor
         {
             txtId_Transaksi.Clear();
             txtId_Pengguna.Clear();
-            txtTanggal_Transaksi.Clear();
+            dtpTanggalTransaksi.Value = DateTime.Now;
             txtTotal_Harga.Clear();
 
             txtId_Transaksi.Focus();
@@ -40,8 +44,8 @@ namespace Sparepart_Motor
                 try
                 {
                     conn.Open();
-                    string query = "SELECT Id_Transaksi, Id_Pengguna, Tanggal_Transaksi, Total_Harga FROM Transaksi_Pembelian";
-                    SqlDataAdapter da = new SqlDataAdapter(query, conn);
+                    SqlDataAdapter da = new SqlDataAdapter("sp_GetAllTransaksi", conn);
+                    da.SelectCommand.CommandType = CommandType.StoredProcedure;
                     DataTable dt = new DataTable();
                     da.Fill(dt);
 
@@ -63,19 +67,19 @@ namespace Sparepart_Motor
             {
                 try
                 {
-                    if (txtId_Transaksi.Text == "" || txtId_Pengguna.Text == "" || txtTanggal_Transaksi.Text == "" || txtTotal_Harga.Text == "")
+                    if (txtId_Transaksi.Text == "" || txtId_Pengguna.Text == "" || txtTotal_Harga.Text == "")
                     {
                         MessageBox.Show("Harap isi semua data!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
                     conn.Open();
-                    string query = "INSERT INTO Transaksi_Pembelian (Id_Transaksi, Id_Pengguna, Tanggal_Transaksi, Total_Harga) VALUES (@Id_Transaksi, @Id_Pengguna, @Tanggal_Transaksi, @Total_Harga)";
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    using (SqlCommand cmd = new SqlCommand("sp_CreateTransaksi", conn))
                     {
+                        cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@Id_Transaksi", txtId_Transaksi.Text.Trim());
                         cmd.Parameters.AddWithValue("@Id_Pengguna", txtId_Pengguna.Text.Trim());
-                        cmd.Parameters.AddWithValue("@Tanggal_transaksi", txtTanggal_Transaksi.Text.Trim());
+                        cmd.Parameters.AddWithValue("@Tanggal_Transaksi", dtpTanggalTransaksi.Value);
                         cmd.Parameters.AddWithValue("@Total_Harga", txtTotal_Harga.Text.Trim());
 
                         int rowsAffected = cmd.ExecuteNonQuery();
@@ -112,10 +116,9 @@ namespace Sparepart_Motor
                         {
                             string Id_Transaksi = dgvSparepart.SelectedRows[0].Cells["Id_Transaksi"].Value.ToString();
                             conn.Open();
-                            string query = "DELETE FROM Transaksi_Pembelian WHERE Id_Transaksi = @Id_Transaksi";
-
-                            using (SqlCommand cmd = new SqlCommand(query, conn))
+                            using (SqlCommand cmd = new SqlCommand("sp_DeleteTransaksi", conn))
                             {
+                                cmd.CommandType = CommandType.StoredProcedure;
                                 cmd.Parameters.AddWithValue("@Id_Transaksi", Id_Transaksi);
                                 int rowsAffected = cmd.ExecuteNonQuery();
 
@@ -160,7 +163,7 @@ namespace Sparepart_Motor
 
                 txtId_Transaksi.Text = row.Cells[0].Value.ToString();
                 txtId_Pengguna.Text = row.Cells[1].Value?.ToString();
-                txtTanggal_Transaksi.Text = row.Cells[2].Value?.ToString();
+                dtpTanggalTransaksi.Value = Convert.ToDateTime(row.Cells[2].Value);
                 txtTotal_Harga.Text = row.Cells[3].Value?.ToString();
             }
         }
@@ -171,19 +174,19 @@ namespace Sparepart_Motor
             {
                 try
                 {
-                    if (txtId_Transaksi.Text == "" || txtId_Pengguna.Text == "" || txtTanggal_Transaksi.Text == "" || txtTotal_Harga.Text == "")
+                    if (txtId_Transaksi.Text == "" || txtId_Pengguna.Text == "" || txtTotal_Harga.Text == "")
                     {
                         MessageBox.Show("Harap isi semua data!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
                     conn.Open();
-                    string query = "UPDATE Transaksi_Pembelian SET Id_Pengguna = @Id_Pengguna, Tanggal_Transaksi = @Tanggal_Transaksi, Total_Harga = @Total_Harga WHERE Id_Transaksi = @Id_Transaksi";
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    using (SqlCommand cmd = new SqlCommand("sp_UpdateTransaksi", conn))
                     {
+                        cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@Id_Transaksi", txtId_Transaksi.Text.Trim());
                         cmd.Parameters.AddWithValue("@Id_Pengguna", txtId_Pengguna.Text.Trim());
-                        cmd.Parameters.AddWithValue("@Tanggal_transaksi", txtTanggal_Transaksi.Text.Trim());
+                        cmd.Parameters.AddWithValue("@Tanggal_Transaksi", dtpTanggalTransaksi.Value);
                         cmd.Parameters.AddWithValue("@Total_Harga", txtTotal_Harga.Text.Trim());
 
                         int rowsAffected = cmd.ExecuteNonQuery();
@@ -202,6 +205,93 @@ namespace Sparepart_Motor
                 catch (Exception ex)
                 {
                     MessageBox.Show("Error: " + ex.Message, "Kesalahan", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void btnImportExcel_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
+            openFileDialog1.Title = "Pilih file Excel untuk diimpor";
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    DataTable dt = new DataTable();
+                    IWorkbook workbook;
+                    using (var stream = new FileStream(openFileDialog1.FileName, FileMode.Open, FileAccess.Read))
+                    {
+                        workbook = WorkbookFactory.Create(stream);
+                    }
+                    ISheet sheet = workbook.GetSheetAt(0);
+                    IRow headerRow = sheet.GetRow(0);
+                    int cellCount = headerRow.LastCellNum;
+                    for (int j = 0; j < cellCount; j++)
+                    {
+                        dt.Columns.Add(headerRow.GetCell(j)?.ToString() ?? $"Column_{j}");
+                    }
+                    for (int i = (sheet.FirstRowNum + 1); i <= sheet.LastRowNum; i++)
+                    {
+                        IRow row = sheet.GetRow(i);
+                        if (row == null) continue;
+                        DataRow dataRow = dt.NewRow();
+                        for (int j = 0; j < cellCount; j++)
+                        {
+                            dataRow[j] = row.GetCell(j)?.ToString() ?? string.Empty;
+                        }
+                        dt.Rows.Add(dataRow);
+                    }
+
+                    PreviewForm preview = new PreviewForm(dt, "Pratinjau Impor Data Transaksi");
+                    if (preview.ShowDialog() == DialogResult.OK)
+                    {
+                        ProsesImportTransaksiKeDatabase(dt);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Gagal membaca file Excel. Error: " + ex.Message, "Kesalahan", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void ProsesImportTransaksiKeDatabase(DataTable dt)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    int jumlahBerhasil = 0;
+                    int jumlahGagal = 0;
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        try
+                        {
+                            using (SqlCommand cmd = new SqlCommand("sp_CreateTransaksi", conn))
+                            {
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                cmd.Parameters.AddWithValue("@Id_Transaksi", Convert.ToInt32(row["Id_Transaksi"]));
+                                cmd.Parameters.AddWithValue("@Id_Pengguna", Convert.ToInt32(row["Id_Pengguna"]));
+                                cmd.Parameters.AddWithValue("@Tanggal_Transaksi", Convert.ToDateTime(row["Tanggal_Transaksi"]));
+                                cmd.Parameters.AddWithValue("@Total_Harga", Convert.ToDecimal(row["Total_Harga"]));
+                                cmd.ExecuteNonQuery();
+                                jumlahBerhasil++;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Gagal mengimpor baris untuk Id_Transaksi {row["Id_Transaksi"]}. Error: {ex.Message}");
+                            jumlahGagal++;
+                        }
+                    }
+                    MessageBox.Show($"Proses impor selesai.\nBerhasil: {jumlahBerhasil} baris.\nGagal: {jumlahGagal} baris.", "Impor Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadData();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Terjadi kesalahan koneksi database: " + ex.Message, "Error Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

@@ -8,15 +8,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NPOI.SS.UserModel;
+using System.IO;
 
 namespace Sparepart_Motor
 {
     public partial class Form4 : Form
     {
         private string connectionString = "Data Source=LAPTOP-ITV1OTU4\\HAFIZ16;Initial Catalog=manajemen_sparepart;Integrated Security=True";
+        private OpenFileDialog openFileDialog1;
         public Form4()
         {
             InitializeComponent();
+            openFileDialog1 = new OpenFileDialog();
         }
 
         private void Form4_Load(object sender, EventArgs e)
@@ -41,8 +45,8 @@ namespace Sparepart_Motor
                 try
                 {
                     conn.Open();
-                    string query = "SELECT Id_Detail, Id_Transaksi, Id_Barang, Jumlah, Harga_Satuan, Subtotal FROM Detail_Pembelian";
-                    SqlDataAdapter da = new SqlDataAdapter(query, conn);
+                    SqlDataAdapter da = new SqlDataAdapter("sp_GetAllDetail", conn);
+                    da.SelectCommand.CommandType = CommandType.StoredProcedure;
                     DataTable dt = new DataTable();
                     da.Fill(dt);
 
@@ -71,9 +75,9 @@ namespace Sparepart_Motor
                     }
 
                     conn.Open();
-                    string query = "INSERT INTO Detail_Pembelian (Id_Detail, Id_Transaksi, Id_Barang, Jumlah, Harga_Satuan) VALUES (@Id_Detail, @Id_Transaksi, @Id_Barang, @Jumlah, @Harga_Satuan)";
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    using (SqlCommand cmd = new SqlCommand("sp_CreateDetail", conn))
                     {
+                        cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@Id_Detail", txtId_Detail.Text.Trim());
                         cmd.Parameters.AddWithValue("@Id_Transaksi", txtId_Transaksi.Text.Trim());
                         cmd.Parameters.AddWithValue("@Id_Barang", txtId_Barang.Text.Trim());
@@ -114,10 +118,9 @@ namespace Sparepart_Motor
                         {
                             string Id_Detail = dgvSparepart.SelectedRows[0].Cells["Id_Detail"].Value.ToString();
                             conn.Open();
-                            string query = "DELETE FROM Detail_Pembelian WHERE Id_Detail = @Id_Detail";
-
-                            using (SqlCommand cmd = new SqlCommand(query, conn))
+                            using (SqlCommand cmd = new SqlCommand("sp_DeleteDetail", conn))
                             {
+                                cmd.CommandType = CommandType.StoredProcedure;
                                 cmd.Parameters.AddWithValue("@Id_Detail", Id_Detail);
                                 int rowsAffected = cmd.ExecuteNonQuery();
 
@@ -181,9 +184,9 @@ namespace Sparepart_Motor
                     }
 
                     conn.Open();
-                    string query = "UPDATE Detail_Pembelian SET Id_Detail = @Id_Detail, Id_Barang = @Id_Barang, Jumlah = @Jumlah, Harga_Satuan = @Harga_Satuan WHERE Id_Detail = @Id_Detail";
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    using (SqlCommand cmd = new SqlCommand("sp_UpdateDetail", conn))
                     {
+                        cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@Id_Detail", txtId_Detail.Text.Trim());
                         cmd.Parameters.AddWithValue("@Id_Transaksi", txtId_Transaksi.Text.Trim());
                         cmd.Parameters.AddWithValue("@Id_Barang", txtId_Barang.Text.Trim());
@@ -206,6 +209,94 @@ namespace Sparepart_Motor
                 catch (Exception ex)
                 {
                     MessageBox.Show("Error: " + ex.Message, "Kesalahan", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void btnImportExcel_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
+            openFileDialog1.Title = "Pilih file Excel untuk diimpor";
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    DataTable dt = new DataTable();
+                    IWorkbook workbook;
+                    using (var stream = new FileStream(openFileDialog1.FileName, FileMode.Open, FileAccess.Read))
+                    {
+                        workbook = WorkbookFactory.Create(stream);
+                    }
+                    ISheet sheet = workbook.GetSheetAt(0);
+                    IRow headerRow = sheet.GetRow(0);
+                    int cellCount = headerRow.LastCellNum;
+                    for (int j = 0; j < cellCount; j++)
+                    {
+                        dt.Columns.Add(headerRow.GetCell(j)?.ToString() ?? $"Column_{j}");
+                    }
+                    for (int i = (sheet.FirstRowNum + 1); i <= sheet.LastRowNum; i++)
+                    {
+                        IRow row = sheet.GetRow(i);
+                        if (row == null) continue;
+                        DataRow dataRow = dt.NewRow();
+                        for (int j = 0; j < cellCount; j++)
+                        {
+                            dataRow[j] = row.GetCell(j)?.ToString() ?? string.Empty;
+                        }
+                        dt.Rows.Add(dataRow);
+                    }
+
+                    PreviewForm preview = new PreviewForm(dt, "Pratinjau Impor Data Detail Transaksi");
+                    if (preview.ShowDialog() == DialogResult.OK)
+                    {
+                        ProsesImportDetailKeDatabase(dt);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Gagal membaca file Excel. Error: " + ex.Message, "Kesalahan", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void ProsesImportDetailKeDatabase(DataTable dt)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+                    int jumlahBerhasil = 0;
+                    int jumlahGagal = 0;
+                    foreach (DataRow row in dt.Rows)
+                    {
+                        try
+                        {
+                            using (SqlCommand cmd = new SqlCommand("sp_CreateDetail", conn))
+                            {
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                cmd.Parameters.AddWithValue("@Id_Detail", Convert.ToInt32(row["Id_Detail"]));
+                                cmd.Parameters.AddWithValue("@Id_Transaksi", Convert.ToInt32(row["Id_Transaksi"]));
+                                cmd.Parameters.AddWithValue("@Id_Barang", Convert.ToInt32(row["Id_Barang"]));
+                                cmd.Parameters.AddWithValue("@Jumlah", Convert.ToInt32(row["Jumlah"]));
+                                cmd.Parameters.AddWithValue("@Harga_Satuan", Convert.ToDecimal(row["Harga_Satuan"]));
+                                cmd.ExecuteNonQuery();
+                                jumlahBerhasil++;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Gagal mengimpor baris untuk Id_Detail {row["Id_Detail"]}. Error: {ex.Message}");
+                            jumlahGagal++;
+                        }
+                    }
+                    MessageBox.Show($"Proses impor selesai.\nBerhasil: {jumlahBerhasil} baris.\nGagal: {jumlahGagal} baris.", "Impor Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadData();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Terjadi kesalahan koneksi database: " + ex.Message, "Error Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

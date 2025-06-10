@@ -17,14 +17,14 @@ namespace Sparepart_Motor
             InitializeComponent();
         }
 
-        private void btnBukaForm1_Click(object sender, EventArgs e)
+        private void btnPengguna_Click(object sender, EventArgs e)
         {
             // Membuka Form1
             Form1 form1 = new Form1();
             form1.Show();
         }
 
-        private void btnBukaForm2_Click(object sender, EventArgs e)
+        private void btnSparepart_Click(object sender, EventArgs e)
         {
             // Membuka Form2
             Form2 form2 = new Form2();
@@ -37,7 +37,7 @@ namespace Sparepart_Motor
             form3.Show();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnDetail_Click(object sender, EventArgs e)
         {
             Form4 form4 = new Form4();
             form4.Show();

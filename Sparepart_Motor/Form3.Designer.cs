@@ -35,13 +35,14 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtId_Transaksi = new System.Windows.Forms.TextBox();
             this.txtId_Pengguna = new System.Windows.Forms.TextBox();
-            this.txtTanggal_Transaksi = new System.Windows.Forms.TextBox();
             this.txtTotal_Harga = new System.Windows.Forms.TextBox();
             this.bttnTambah = new System.Windows.Forms.Button();
             this.bttnHapus = new System.Windows.Forms.Button();
             this.bttnUbah = new System.Windows.Forms.Button();
             this.bttnRefresh = new System.Windows.Forms.Button();
             this.dgvSparepart = new System.Windows.Forms.DataGridView();
+            this.btnImport = new System.Windows.Forms.Button();
+            this.dtpTanggalTransaksi = new System.Windows.Forms.DateTimePicker();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSparepart)).BeginInit();
             this.SuspendLayout();
@@ -51,13 +52,13 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.dtpTanggalTransaksi, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.label4, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.txtId_Transaksi, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.txtId_Pengguna, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.txtTanggal_Transaksi, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.txtTotal_Harga, 1, 3);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(103, 41);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -120,13 +121,6 @@
             this.txtId_Pengguna.Size = new System.Drawing.Size(160, 22);
             this.txtId_Pengguna.TabIndex = 5;
             // 
-            // txtTanggal_Transaksi
-            // 
-            this.txtTanggal_Transaksi.Location = new System.Drawing.Point(168, 91);
-            this.txtTanggal_Transaksi.Name = "txtTanggal_Transaksi";
-            this.txtTanggal_Transaksi.Size = new System.Drawing.Size(160, 22);
-            this.txtTanggal_Transaksi.TabIndex = 6;
-            // 
             // txtTotal_Harga
             // 
             this.txtTotal_Harga.Location = new System.Drawing.Point(168, 135);
@@ -136,7 +130,7 @@
             // 
             // bttnTambah
             // 
-            this.bttnTambah.Location = new System.Drawing.Point(555, 24);
+            this.bttnTambah.Location = new System.Drawing.Point(504, 24);
             this.bttnTambah.Name = "bttnTambah";
             this.bttnTambah.Size = new System.Drawing.Size(120, 42);
             this.bttnTambah.TabIndex = 1;
@@ -146,7 +140,7 @@
             // 
             // bttnHapus
             // 
-            this.bttnHapus.Location = new System.Drawing.Point(555, 78);
+            this.bttnHapus.Location = new System.Drawing.Point(504, 78);
             this.bttnHapus.Name = "bttnHapus";
             this.bttnHapus.Size = new System.Drawing.Size(120, 42);
             this.bttnHapus.TabIndex = 2;
@@ -156,7 +150,7 @@
             // 
             // bttnUbah
             // 
-            this.bttnUbah.Location = new System.Drawing.Point(555, 132);
+            this.bttnUbah.Location = new System.Drawing.Point(504, 132);
             this.bttnUbah.Name = "bttnUbah";
             this.bttnUbah.Size = new System.Drawing.Size(120, 42);
             this.bttnUbah.TabIndex = 3;
@@ -166,7 +160,7 @@
             // 
             // bttnRefresh
             // 
-            this.bttnRefresh.Location = new System.Drawing.Point(555, 190);
+            this.bttnRefresh.Location = new System.Drawing.Point(504, 190);
             this.bttnRefresh.Name = "bttnRefresh";
             this.bttnRefresh.Size = new System.Drawing.Size(120, 42);
             this.bttnRefresh.TabIndex = 4;
@@ -185,11 +179,29 @@
             this.dgvSparepart.TabIndex = 5;
             this.dgvSparepart.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSparepart_CellContentClick);
             // 
+            // btnImport
+            // 
+            this.btnImport.Location = new System.Drawing.Point(663, 106);
+            this.btnImport.Name = "btnImport";
+            this.btnImport.Size = new System.Drawing.Size(98, 39);
+            this.btnImport.TabIndex = 6;
+            this.btnImport.Text = "Import";
+            this.btnImport.UseVisualStyleBackColor = true;
+            this.btnImport.Click += new System.EventHandler(this.btnImportExcel_Click);
+            // 
+            // dtpTanggalTransaksi
+            // 
+            this.dtpTanggalTransaksi.Location = new System.Drawing.Point(168, 91);
+            this.dtpTanggalTransaksi.Name = "dtpTanggalTransaksi";
+            this.dtpTanggalTransaksi.Size = new System.Drawing.Size(160, 22);
+            this.dtpTanggalTransaksi.TabIndex = 7;
+            // 
             // Form3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnImport);
             this.Controls.Add(this.dgvSparepart);
             this.Controls.Add(this.bttnRefresh);
             this.Controls.Add(this.bttnUbah);
@@ -198,9 +210,9 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Form3";
             this.Text = "Transaksi";
+            this.Load += new System.EventHandler(this.Form3_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.Load += new System.EventHandler(this.Form3_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvSparepart)).EndInit();
             this.ResumeLayout(false);
 
@@ -215,12 +227,13 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtId_Transaksi;
         private System.Windows.Forms.TextBox txtId_Pengguna;
-        private System.Windows.Forms.TextBox txtTanggal_Transaksi;
         private System.Windows.Forms.TextBox txtTotal_Harga;
         private System.Windows.Forms.Button bttnTambah;
         private System.Windows.Forms.Button bttnHapus;
         private System.Windows.Forms.Button bttnUbah;
         private System.Windows.Forms.Button bttnRefresh;
         private System.Windows.Forms.DataGridView dgvSparepart;
+        private System.Windows.Forms.Button btnImport;
+        private System.Windows.Forms.DateTimePicker dtpTanggalTransaksi;
     }
 }
