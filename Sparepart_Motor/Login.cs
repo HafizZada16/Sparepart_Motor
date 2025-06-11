@@ -23,6 +23,16 @@ namespace Sparepart_Motor
                 MessageBox.Show("Email dan Password harus diisi.", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            try
+            {
+                var emailAddress = new System.Net.Mail.MailAddress(txtEmail.Text);
+            }
+            catch
+            {
+                MessageBox.Show("Format email tidak valid. Pastikan formatnya benar (contoh: user@domain.com).", "Input Tidak Valid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtEmail.Focus();
+                return;
+            }
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
