@@ -15,8 +15,8 @@ namespace Sparepart_Motor
 {
     public partial class Form2 : Form
     {
-        private string connectionString = "Data Source=LAPTOP-ITV1OTU4\\HAFIZ16;Initial Catalog=manajemen_sparepart;Integrated Security=True";
-        private OpenFileDialog openFileDialog1;
+        private readonly string connectionString = "Data Source=LAPTOP-ITV1OTU4\\HAFIZ16;Initial Catalog=manajemen_sparepart;Integrated Security=True";
+        private readonly OpenFileDialog openFileDialog1;
         public Form2()
         {
             InitializeComponent();
@@ -256,40 +256,59 @@ namespace Sparepart_Motor
 
         private void ProsesImportSparepartKeDatabase(DataTable dt)
         {
+            // Menggunakan connectionString yang ada di Form2
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
+                // 1. Deklarasikan transaksi di luar 'try' dengan nilai awal null
+                SqlTransaction transaction = null;
                 try
                 {
                     conn.Open();
+                    // 2. Beri nilai pada variabel transaksi di dalam 'try'
+                    transaction = conn.BeginTransaction();
                     int jumlahBerhasil = 0;
-                    int jumlahGagal = 0;
+
                     foreach (DataRow row in dt.Rows)
                     {
-                        try
+                        // Panggil Stored Procedure untuk membuat Sparepart baru
+                        using (SqlCommand cmd = new SqlCommand("sp_CreateSparepart", conn, transaction))
                         {
-                            using (SqlCommand cmd = new SqlCommand("sp_CreateSparepart", conn))
-                            {
-                                cmd.CommandType = CommandType.StoredProcedure;
-                                // Sesuaikan dengan nama kolom di file Excel Anda
-                                cmd.Parameters.AddWithValue("@Id_Barang", Convert.ToInt32(row["Id_Barang"]));
-                                cmd.Parameters.AddWithValue("@Nama_Barang", row["Nama_Barang"].ToString());
-                                cmd.Parameters.AddWithValue("@Harga", Convert.ToDecimal(row["Harga"]));
-                                cmd.ExecuteNonQuery();
-                                jumlahBerhasil++;
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Gagal mengimpor baris untuk Id_Barang {row["Id_Barang"]}. Error: {ex.Message}");
-                            jumlahGagal++;
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            // Sesuaikan parameter dengan kebutuhan sp_CreateSparepart
+                            cmd.Parameters.AddWithValue("@Id_Barang", Convert.ToInt32(row["Id_Barang"]));
+                            cmd.Parameters.AddWithValue("@Nama_Barang", row["Nama_Barang"].ToString());
+                            cmd.Parameters.AddWithValue("@Harga", Convert.ToDecimal(row["Harga"]));
+
+                            cmd.ExecuteNonQuery();
+                            jumlahBerhasil++;
                         }
                     }
-                    MessageBox.Show($"Proses impor selesai.\nBerhasil: {jumlahBerhasil} baris.\nGagal: {jumlahGagal} baris.", "Impor Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadData();
+
+                    // 3. Jika semua loop berhasil, COMMIT untuk menyimpan permanen
+                    transaction.Commit();
+                    MessageBox.Show($"Proses impor selesai. Berhasil: {jumlahBerhasil} baris.", "Impor Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Terjadi kesalahan koneksi database: " + ex.Message, "Error Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Terjadi kesalahan. Semua proses impor dibatalkan. \n\nError: " + ex.Message, "Impor Gagal", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    try
+                    {
+                        // 4. Jika ada error, ROLLBACK untuk membatalkan semua
+                        if (transaction != null)
+                        {
+                            transaction.Rollback();
+                        }
+                    }
+                    catch (Exception rbEx)
+                    {
+                        MessageBox.Show("Gagal melakukan rollback: " + rbEx.Message);
+                    }
+                }
+                finally
+                {
+                    // Selalu refresh data di tabel setelah proses selesai
+                    LoadData();
                 }
             }
         }
