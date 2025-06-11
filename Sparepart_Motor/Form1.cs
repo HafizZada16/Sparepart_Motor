@@ -17,7 +17,7 @@ namespace Sparepart_Motor
 {
     public partial class Form1 : Form
     {
-        private string connectionString = "Data Source=LAPTOP-ITV1OTU4\\HAFIZ16;Initial Catalog=manajemen_sparepart;Integrated Security=True";
+        private readonly string connectionString = "Data Source=LAPTOP-ITV1OTU4\\HAFIZ16;Initial Catalog=manajemen_sparepart;Integrated Security=True";
         public Form1()
         {
             InitializeComponent();
@@ -290,44 +290,38 @@ namespace Sparepart_Motor
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
+                SqlTransaction transaction = null;
                 try
                 {
                     conn.Open();
+                    transaction = conn.BeginTransaction();
                     int jumlahBerhasil = 0;
-                    int jumlahGagal = 0;
 
                     // Loop melalui setiap baris data di DataTable dari pratinjau
                     foreach (DataRow row in dt.Rows)
                     {
-                        try
+                        // Panggil stored procedure untuk membuat pengguna baru
+                        using (SqlCommand cmd = new SqlCommand("sp_CreatePengguna", conn))
                         {
-                            // Panggil stored procedure untuk membuat pengguna baru
-                            using (SqlCommand cmd = new SqlCommand("sp_CreatePengguna", conn))
-                            {
-                                cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Transaction = transaction;
+                            cmd.CommandType = CommandType.StoredProcedure;
 
-                                // PENTING: Pastikan nama kolom di file Excel Anda sesuai
-                                // dengan yang tertulis di sini (misal: "Id_Pengguna", "Nama", dll)
-                                cmd.Parameters.AddWithValue("@Id_Pengguna", Convert.ToInt32(row["Id_Pengguna"]));
-                                cmd.Parameters.AddWithValue("@Nama", row["Nama"].ToString());
-                                cmd.Parameters.AddWithValue("@Email", row["Email"].ToString());
-                                cmd.Parameters.AddWithValue("@Password", row["Password"].ToString());
-                                cmd.Parameters.AddWithValue("@Telepon", row["Telepon"].ToString());
-                                cmd.Parameters.AddWithValue("@Alamat", row["Alamat"].ToString());
+                            // PENTING: Pastikan nama kolom di file Excel Anda sesuai
+                            // dengan yang tertulis di sini (misal: "Id_Pengguna", "Nama", dll)
+                            cmd.Parameters.AddWithValue("@Id_Pengguna", Convert.ToInt32(row["Id_Pengguna"]));
+                            cmd.Parameters.AddWithValue("@Nama", row["Nama"].ToString());
+                            cmd.Parameters.AddWithValue("@Email", row["Email"].ToString());
+                            cmd.Parameters.AddWithValue("@Password", row["Password"].ToString());
+                            cmd.Parameters.AddWithValue("@Telepon", row["Telepon"].ToString());
+                            cmd.Parameters.AddWithValue("@Alamat", row["Alamat"].ToString());
 
-                                cmd.ExecuteNonQuery();
-                                jumlahBerhasil++;
-                            }
+                            cmd.ExecuteNonQuery();
+                            jumlahBerhasil++;
                         }
-                        catch (Exception ex)
-                        {
-                            // Jika satu baris gagal (misal: format data salah), catat dan lanjutkan
-                            Console.WriteLine($"Gagal mengimpor baris untuk Id_Pengguna {row["Id_Pengguna"]}. Error: {ex.Message}");
-                            jumlahGagal++;
-                        }
+
                     }
-
-                    MessageBox.Show($"Proses impor selesai.\nBerhasil: {jumlahBerhasil} baris.\nGagal: {jumlahGagal} baris.", "Impor Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    transaction.Commit();
+                    MessageBox.Show($"Proses impor selesai.\nBerhasil: {jumlahBerhasil} baris.", "Impor Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // Muat ulang data di tabel utama untuk menampilkan data yang baru diimpor
                     LoadData();
@@ -335,6 +329,22 @@ namespace Sparepart_Motor
                 catch (Exception ex)
                 {
                     MessageBox.Show("Terjadi kesalahan koneksi database: " + ex.Message, "Error Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    try
+                    {
+                        // ...maka ROLLBACK transaksinya
+                        transaction.Rollback();
+                    }
+                    catch (Exception rbEx)
+                    {
+                        // Tangani jika proses rollback itu sendiri gagal
+                        MessageBox.Show("Gagal melakukan rollback: " + rbEx.Message);
+                    }
+                }
+                finally
+                {
+                    // Muat ulang data untuk merefleksikan hasil akhir (sukses atau setelah rollback)
+                    LoadData();
                 }
             }
         }
