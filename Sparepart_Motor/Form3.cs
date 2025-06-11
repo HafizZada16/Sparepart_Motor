@@ -68,9 +68,33 @@ namespace Sparepart_Motor
             {
                 try
                 {
-                    if (txtId_Transaksi.Text == "" || txtId_Pengguna.Text == "" || txtTotal_Harga.Text == "")
+                    if (string.IsNullOrEmpty(txtId_Transaksi.Text) || string.IsNullOrEmpty(txtId_Pengguna.Text) || string.IsNullOrEmpty(txtTotal_Harga.Text))
                     {
-                        MessageBox.Show("Harap isi semua data!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("Harap isi semua kolom ID dan Total Harga!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    // 2. Validasi ID Transaksi (harus berupa angka)
+                    if (!int.TryParse(txtId_Transaksi.Text, out _))
+                    {
+                        MessageBox.Show("ID Transaksi harus berupa angka.", "Input Tidak Valid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtId_Transaksi.Focus();
+                        return;
+                    }
+
+                    // 3. Validasi ID Pengguna (harus berupa angka)
+                    if (!int.TryParse(txtId_Pengguna.Text, out _))
+                    {
+                        MessageBox.Show("ID Pengguna harus berupa angka.", "Input Tidak Valid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtId_Pengguna.Focus();
+                        return;
+                    }
+
+                    // 4. Validasi Total Harga (harus berupa angka atau desimal)
+                    if (!decimal.TryParse(txtTotal_Harga.Text, out _))
+                    {
+                        MessageBox.Show("Total Harga harus berupa angka atau desimal.", "Input Tidak Valid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtTotal_Harga.Focus();
                         return;
                     }
 
@@ -175,9 +199,33 @@ namespace Sparepart_Motor
             {
                 try
                 {
-                    if (txtId_Transaksi.Text == "" || txtId_Pengguna.Text == "" || txtTotal_Harga.Text == "")
+                    if (string.IsNullOrEmpty(txtId_Transaksi.Text) || string.IsNullOrEmpty(txtId_Pengguna.Text) || string.IsNullOrEmpty(txtTotal_Harga.Text))
                     {
-                        MessageBox.Show("Harap isi semua data!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("Harap isi semua kolom ID dan Total Harga!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    // 2. Validasi ID Transaksi (harus berupa angka)
+                    if (!int.TryParse(txtId_Transaksi.Text, out _))
+                    {
+                        MessageBox.Show("ID Transaksi harus berupa angka.", "Input Tidak Valid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtId_Transaksi.Focus();
+                        return;
+                    }
+
+                    // 3. Validasi ID Pengguna (harus berupa angka)
+                    if (!int.TryParse(txtId_Pengguna.Text, out _))
+                    {
+                        MessageBox.Show("ID Pengguna harus berupa angka.", "Input Tidak Valid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtId_Pengguna.Focus();
+                        return;
+                    }
+
+                    // 4. Validasi Total Harga (harus berupa angka atau desimal)
+                    if (!decimal.TryParse(txtTotal_Harga.Text, out _))
+                    {
+                        MessageBox.Show("Total Harga harus berupa angka atau desimal.", "Input Tidak Valid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtTotal_Harga.Focus();
                         return;
                     }
 

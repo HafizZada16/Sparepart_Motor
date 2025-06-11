@@ -66,9 +66,25 @@ namespace Sparepart_Motor
             {
                 try
                 {
-                    if (txtId_Barang.Text == "" || txtNama_Barang.Text == "" || txtHarga.Text == "")
+                    if (string.IsNullOrEmpty(txtId_Barang.Text) || string.IsNullOrEmpty(txtNama_Barang.Text) || string.IsNullOrEmpty(txtHarga.Text))
                     {
                         MessageBox.Show("Harap isi semua data!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    // 2. Validasi ID Barang (harus berupa angka)
+                    if (!int.TryParse(txtId_Barang.Text, out _))
+                    {
+                        MessageBox.Show("ID Barang harus berupa angka.", "Input Tidak Valid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtId_Barang.Focus();
+                        return;
+                    }
+
+                    // 3. Validasi Harga (harus berupa angka atau desimal)
+                    if (!decimal.TryParse(txtHarga.Text, out _))
+                    {
+                        MessageBox.Show("Harga harus berupa angka atau desimal.", "Input Tidak Valid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtHarga.Focus();
                         return;
                     }
 
@@ -171,9 +187,25 @@ namespace Sparepart_Motor
             {
                 try
                 {
-                    if (txtId_Barang.Text == "" || txtNama_Barang.Text == "" || txtHarga.Text == "")
+                    if (string.IsNullOrEmpty(txtId_Barang.Text) || string.IsNullOrEmpty(txtNama_Barang.Text) || string.IsNullOrEmpty(txtHarga.Text))
                     {
                         MessageBox.Show("Harap isi semua data!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    // 2. Validasi ID Barang (harus berupa angka)
+                    if (!int.TryParse(txtId_Barang.Text, out _))
+                    {
+                        MessageBox.Show("ID Barang harus berupa angka.", "Input Tidak Valid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtId_Barang.Focus();
+                        return;
+                    }
+
+                    // 3. Validasi Harga (harus berupa angka atau desimal)
+                    if (!decimal.TryParse(txtHarga.Text, out _))
+                    {
+                        MessageBox.Show("Harga harus berupa angka atau desimal.", "Input Tidak Valid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtHarga.Focus();
                         return;
                     }
 

@@ -44,24 +44,14 @@ namespace Sparepart_Motor
                     da.Fill(dt);
                 }
 
-                // Membuat ReportDataSource. Nama "DataSet1" diambil dari materi Anda.
-                // PASTIKAN nama ini sama dengan nama DataSet di dalam file .rdlc Anda.
                 ReportDataSource rds = new ReportDataSource("PenggunaDataSet", dt);
 
                 // Membersihkan data source lama dan menambahkan yang baru
                 this.reportViewerPengguna.LocalReport.DataSources.Clear();
                 this.reportViewerPengguna.LocalReport.DataSources.Add(rds);
 
-                // --- PENTING: Pengaturan Path Laporan ---
-                // Materi Anda menggunakan ReportPath absolut, ini tidak portabel.
-                // Cara yang lebih baik adalah menggunakan ReportEmbeddedResource.
-                // Silakan pilih salah satu, tapi yang direkomendasikan adalah baris kedua.
-
-                // CARA 1: Sesuai Materi (Ganti dengan path absolut Anda, TIDAK DIREKOMENDASIKAN)
                 this.reportViewerPengguna.LocalReport.ReportPath = @"D:\_kuliah\coding4\PABD\Sparepart_Motor\Sparepart_Motor\LaporanPengguna.rdlc";
 
-                // CARA 2: Cara yang Lebih Baik dan Portabel (DIREKOMENDASIKAN)
-                //this.reportViewerPengguna.LocalReport.ReportEmbeddedResource = "Sparepart_Motor.LaporanPengguna.rdlc";
             }
             catch (Exception ex)
             {

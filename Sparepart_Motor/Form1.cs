@@ -12,6 +12,7 @@ using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using NPOI.HSSF.UserModel;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace Sparepart_Motor
 {
@@ -71,9 +72,52 @@ namespace Sparepart_Motor
             {
                 try
                 {
-                    if (txtId_Pengguna.Text == "" || txtNama.Text == "" || txtEmail.Text == "" || txtPassword.Text == "" || txtTelepon.Text == "" || txtAlamat.Text == "")
+                    if (string.IsNullOrEmpty(txtId_Pengguna.Text) || string.IsNullOrEmpty(txtNama.Text) ||
+                        string.IsNullOrEmpty(txtEmail.Text) || string.IsNullOrEmpty(txtPassword.Text) ||
+                        string.IsNullOrEmpty(txtTelepon.Text) || string.IsNullOrEmpty(txtAlamat.Text))
                     {
                         MessageBox.Show("Harap isi semua data!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    // 2. Validasi ID Pengguna (harus berupa angka)
+                    if (!int.TryParse(txtId_Pengguna.Text, out _))
+                    {
+                        MessageBox.Show("ID Pengguna harus berupa angka.", "Input Tidak Valid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtId_Pengguna.Focus();
+                        return;
+                    }
+
+                    // 3. Validasi Nama (tidak boleh mengandung angka atau simbol)
+                    if (!Regex.IsMatch(txtNama.Text, @"^[a-zA-Z\s.]+$"))
+                    {
+                        MessageBox.Show("Nama tidak boleh mengandung angka atau simbol selain titik.", "Input Tidak Valid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtNama.Focus();
+                        return;
+                    }
+
+                    // 4. Validasi Email (menggunakan metode bawaan .NET yang andal)
+                    try
+                    {
+                        var emailAddress = new System.Net.Mail.MailAddress(txtEmail.Text);
+                        if (emailAddress.Address != txtEmail.Text.Trim())
+                        {
+                            // Ini untuk menangani kasus seperti "  email@example.com  " (spasi di awal/akhir)
+                            throw new FormatException();
+                        }
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Format email tidak valid. Pastikan mengandung '@' dan domain (contoh: .com).", "Input Tidak Valid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtEmail.Focus();
+                        return;
+                    }
+
+                    // 5. Validasi Telepon (hanya boleh angka, spasi, dan simbol + di awal)
+                    if (!Regex.IsMatch(txtTelepon.Text, @"^\+?[0-9\s]+$"))
+                    {
+                        MessageBox.Show("Nomor Telepon hanya boleh mengandung angka, spasi, dan bisa diawali simbol '+'.", "Input Tidak Valid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtTelepon.Focus();
                         return;
                     }
 
@@ -185,9 +229,52 @@ namespace Sparepart_Motor
             {
                 try
                 {
-                    if (txtId_Pengguna.Text == "" || txtNama.Text == "" || txtEmail.Text == "" || txtPassword.Text == "" || txtTelepon.Text == "" || txtAlamat.Text == "")
+                    if (string.IsNullOrEmpty(txtId_Pengguna.Text) || string.IsNullOrEmpty(txtNama.Text) ||
+                        string.IsNullOrEmpty(txtEmail.Text) || string.IsNullOrEmpty(txtPassword.Text) ||
+                        string.IsNullOrEmpty(txtTelepon.Text) || string.IsNullOrEmpty(txtAlamat.Text))
                     {
                         MessageBox.Show("Harap isi semua data!", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
+                    // 2. Validasi ID Pengguna (harus berupa angka)
+                    if (!int.TryParse(txtId_Pengguna.Text, out _))
+                    {
+                        MessageBox.Show("ID Pengguna harus berupa angka.", "Input Tidak Valid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtId_Pengguna.Focus();
+                        return;
+                    }
+
+                    // 3. Validasi Nama (tidak boleh mengandung angka atau simbol)
+                    if (!Regex.IsMatch(txtNama.Text, @"^[a-zA-Z\s.]+$"))
+                    {
+                        MessageBox.Show("Nama tidak boleh mengandung angka atau simbol selain titik.", "Input Tidak Valid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtNama.Focus();
+                        return;
+                    }
+
+                    // 4. Validasi Email (menggunakan metode bawaan .NET yang andal)
+                    try
+                    {
+                        var emailAddress = new System.Net.Mail.MailAddress(txtEmail.Text);
+                        if (emailAddress.Address != txtEmail.Text.Trim())
+                        {
+                            // Ini untuk menangani kasus seperti "  email@example.com  " (spasi di awal/akhir)
+                            throw new FormatException();
+                        }
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Format email tidak valid. Pastikan mengandung '@' dan domain (contoh: .com).", "Input Tidak Valid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtEmail.Focus();
+                        return;
+                    }
+
+                    // 5. Validasi Telepon (hanya boleh angka, spasi, dan simbol + di awal)
+                    if (!Regex.IsMatch(txtTelepon.Text, @"^\+?[0-9\s]+$"))
+                    {
+                        MessageBox.Show("Nomor Telepon hanya boleh mengandung angka, spasi, dan bisa diawali simbol '+'.", "Input Tidak Valid", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        txtTelepon.Focus();
                         return;
                     }
 
@@ -319,8 +406,6 @@ namespace Sparepart_Motor
                             cmd.Transaction = transaction;
                             cmd.CommandType = CommandType.StoredProcedure;
 
-                            // PENTING: Pastikan nama kolom di file Excel Anda sesuai
-                            // dengan yang tertulis di sini (misal: "Id_Pengguna", "Nama", dll)
                             cmd.Parameters.AddWithValue("@Id_Pengguna", Convert.ToInt32(row["Id_Pengguna"]));
                             cmd.Parameters.AddWithValue("@Nama", row["Nama"].ToString());
                             cmd.Parameters.AddWithValue("@Email", row["Email"].ToString());
@@ -345,7 +430,6 @@ namespace Sparepart_Motor
 
                     try
                     {
-                        // ...maka ROLLBACK transaksinya
                         transaction.Rollback();
                     }
                     catch (Exception rbEx)
