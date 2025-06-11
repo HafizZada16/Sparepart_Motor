@@ -131,6 +131,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DetailDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DetailDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -161,11 +166,29 @@
     <Compile Include="Form4.Designer.cs">
       <DependentUpon>Form4.cs</DependentUpon>
     </Compile>
+    <Compile Include="LaporanDetail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LaporanDetail.Designer.cs">
+      <DependentUpon>LaporanDetail.cs</DependentUpon>
+    </Compile>
     <Compile Include="LaporanPengguna.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="LaporanPengguna.Designer.cs">
       <DependentUpon>LaporanPengguna.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LaporanSparepart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LaporanSparepart.Designer.cs">
+      <DependentUpon>LaporanSparepart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LaporanTransaksi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LaporanTransaksi.Designer.cs">
+      <DependentUpon>LaporanTransaksi.cs</DependentUpon>
     </Compile>
     <Compile Include="Login.cs">
       <SubType>Form</SubType>
@@ -186,7 +209,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PenggunaDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="SparepartDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SparepartDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="TransaksiDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TransaksiDataSet.xsd</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Beranda.resx">
       <DependentUpon>Beranda.cs</DependentUpon>
     </EmbeddedResource>
@@ -202,9 +235,20 @@
     <EmbeddedResource Include="Form4.resx">
       <DependentUpon>Form4.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="LaporanDetail.rdlc" />
+    <EmbeddedResource Include="LaporanDetail.resx">
+      <DependentUpon>LaporanDetail.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LaporanPengguna.rdlc" />
     <EmbeddedResource Include="LaporanPengguna.resx">
       <DependentUpon>LaporanPengguna.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LaporanSparepart.resx">
+      <DependentUpon>LaporanSparepart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LaporanTransaksi.rdlc" />
+    <EmbeddedResource Include="LaporanTransaksi.resx">
+      <DependentUpon>LaporanTransaksi.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
@@ -221,6 +265,18 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="LaporanSparepart.rdlc" />
+    <None Include="DetailDataSet.xsc">
+      <DependentUpon>DetailDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DetailDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DetailDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DetailDataSet.xss">
+      <DependentUpon>DetailDataSet.xsd</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -241,6 +297,28 @@
     </None>
     <None Include="PenggunaDataSet.xss">
       <DependentUpon>PenggunaDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="SparepartDataSet.xsc">
+      <DependentUpon>SparepartDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="SparepartDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>SparepartDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="SparepartDataSet.xss">
+      <DependentUpon>SparepartDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="TransaksiDataSet.xsc">
+      <DependentUpon>TransaksiDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="TransaksiDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TransaksiDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="TransaksiDataSet.xss">
+      <DependentUpon>TransaksiDataSet.xsd</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>

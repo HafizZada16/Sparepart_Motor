@@ -205,6 +205,12 @@ namespace Sparepart_Motor
             }
         }
 
+        private void btnReport_Click(object sender, EventArgs e)
+        {
+            LaporanSparepart formLaporan = new LaporanSparepart();
+            formLaporan.Show();
+        }
+
         private void btnImportExcel_Click(object sender, EventArgs e)
         {
             openFileDialog1.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";

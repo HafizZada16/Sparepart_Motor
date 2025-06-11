@@ -1,6 +1,6 @@
 ﻿namespace Sparepart_Motor
 {
-    partial class LaporanPengguna
+    partial class LaporanDetail
     {
         /// <summary>
         /// Required designer variable.
@@ -28,34 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.reportViewerPengguna = new Microsoft.Reporting.WinForms.ReportViewer();
+            this.reportViewerDetail = new Microsoft.Reporting.WinForms.ReportViewer();
             this.SuspendLayout();
             // 
-            // reportViewerPengguna
+            // reportViewerDetail
             // 
-            this.reportViewerPengguna.LocalReport.ReportEmbeddedResource = "Sparepart_Motor.LaporanPengguna.rdlc";
-            this.reportViewerPengguna.Location = new System.Drawing.Point(50, 31);
-            this.reportViewerPengguna.Name = "reportViewerPengguna";
-            this.reportViewerPengguna.Size = new System.Drawing.Size(706, 386);
-            this.reportViewerPengguna.TabIndex = 0;
-            this.reportViewerPengguna.Load += new System.EventHandler(this.LaporanPengguna_Load);
+            this.reportViewerDetail.LocalReport.ReportEmbeddedResource = "Sparepart_Motor.LaporanDetail.rdlc";
+            this.reportViewerDetail.Location = new System.Drawing.Point(12, 24);
+            this.reportViewerDetail.Name = "reportViewerDetail";
+            this.reportViewerDetail.Size = new System.Drawing.Size(776, 393);
+            this.reportViewerDetail.TabIndex = 0;
             // 
-            // LaporanPengguna
+            // LaporanDetail
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.reportViewerPengguna);
-            this.Name = "LaporanPengguna";
-            this.Text = "LaporanPengguna";
-            this.Load += new System.EventHandler(this.LaporanPengguna_Load);
+            this.Controls.Add(this.reportViewerDetail);
+            this.Name = "LaporanDetail";
+            this.Text = "LaporanDetail";
+            this.Load += new System.EventHandler(this.LaporanDetail_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
-        private Microsoft.Reporting.WinForms.ReportViewer reportViewerPengguna;
+        private Microsoft.Reporting.WinForms.ReportViewer reportViewerDetail;
     }
 }

@@ -42,6 +42,7 @@
             this.dgvSparepart = new System.Windows.Forms.DataGridView();
             this.btnImport = new System.Windows.Forms.Button();
             this.btnAnalyze = new System.Windows.Forms.Button();
+            this.btnReport = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSparepart)).BeginInit();
             this.SuspendLayout();
@@ -185,11 +186,22 @@
             this.btnAnalyze.UseVisualStyleBackColor = true;
             this.btnAnalyze.Click += new System.EventHandler(this.btnAnalyze_Click);
             // 
+            // btnReport
+            // 
+            this.btnReport.Location = new System.Drawing.Point(690, 63);
+            this.btnReport.Name = "btnReport";
+            this.btnReport.Size = new System.Drawing.Size(84, 38);
+            this.btnReport.TabIndex = 8;
+            this.btnReport.Text = "Report";
+            this.btnReport.UseVisualStyleBackColor = true;
+            this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnReport);
             this.Controls.Add(this.btnAnalyze);
             this.Controls.Add(this.btnImport);
             this.Controls.Add(this.dgvSparepart);
@@ -224,5 +236,6 @@
         private System.Windows.Forms.DataGridView dgvSparepart;
         private System.Windows.Forms.Button btnImport;
         private System.Windows.Forms.Button btnAnalyze;
+        private System.Windows.Forms.Button btnReport;
     }
 }

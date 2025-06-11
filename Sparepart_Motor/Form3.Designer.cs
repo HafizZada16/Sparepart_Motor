@@ -44,6 +44,7 @@
             this.dgvSparepart = new System.Windows.Forms.DataGridView();
             this.btnImport = new System.Windows.Forms.Button();
             this.btnAnalyze = new System.Windows.Forms.Button();
+            this.btnExport = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSparepart)).BeginInit();
             this.SuspendLayout();
@@ -208,11 +209,22 @@
             this.btnAnalyze.UseVisualStyleBackColor = true;
             this.btnAnalyze.Click += new System.EventHandler(this.btnAnalyze_Click);
             // 
+            // btnExport
+            // 
+            this.btnExport.Location = new System.Drawing.Point(663, 41);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(98, 37);
+            this.btnExport.TabIndex = 8;
+            this.btnExport.Text = "Report";
+            this.btnExport.UseVisualStyleBackColor = true;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
             // Form3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnExport);
             this.Controls.Add(this.btnAnalyze);
             this.Controls.Add(this.btnImport);
             this.Controls.Add(this.dgvSparepart);
@@ -249,5 +261,6 @@
         private System.Windows.Forms.Button btnImport;
         private System.Windows.Forms.DateTimePicker dtpTanggalTransaksi;
         private System.Windows.Forms.Button btnAnalyze;
+        private System.Windows.Forms.Button btnExport;
     }
 }

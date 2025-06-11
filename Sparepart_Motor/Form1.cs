@@ -223,6 +223,19 @@ namespace Sparepart_Motor
             }
         }
 
+        private void btnReport_Click(object sender, EventArgs e)
+        {
+            // 1. Membuat instance baru dari form laporan kita (LaporanPengguna.cs)
+            LaporanPengguna formLaporan = new LaporanPengguna();
+
+            // 2. Menampilkan form laporan tersebut
+            formLaporan.Show();
+
+            // Alternatif: Gunakan ShowDialog() jika Anda ingin form utama (Form1)
+            // tidak bisa di-klik sebelum form laporan ditutup.
+            // formLaporan.ShowDialog(); 
+        }
+
         private void btnImportExcel_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();

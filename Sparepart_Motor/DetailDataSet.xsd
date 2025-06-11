@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DetailDataSet" targetNamespace="http://tempuri.org/DetailDataSet.xsd" xmlns:mstns="http://tempuri.org/DetailDataSet.xsd" xmlns="http://tempuri.org/DetailDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="manajemen_sparepartConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="manajemen_sparepartConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.Sparepart_Motor.Properties.Settings.GlobalReference.Default.manajemen_sparepartConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="DetailTableAdapter" GeneratorDataComponentClassName="DetailTableAdapter" Name="Detail" UserDataComponentName="DetailTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="manajemen_sparepartConnectionString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT D.Id_Detail, D.Id_Transaksi, S.Nama_Barang, D.Jumlah, D.Harga_Satuan, D.Subtotal
+FROM     Detail_Pembelian AS D INNER JOIN
+                  Sparepart AS S ON D.Id_Barang = S.Id_Barang</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="Id_Detail" DataSetColumn="Id_Detail" />
+              <Mapping SourceColumn="Id_Transaksi" DataSetColumn="Id_Transaksi" />
+              <Mapping SourceColumn="Nama_Barang" DataSetColumn="Nama_Barang" />
+              <Mapping SourceColumn="Jumlah" DataSetColumn="Jumlah" />
+              <Mapping SourceColumn="Harga_Satuan" DataSetColumn="Harga_Satuan" />
+              <Mapping SourceColumn="Subtotal" DataSetColumn="Subtotal" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DetailDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_UserDSName="DetailDataSet" msprop:Generator_DataSetName="DetailDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Detail" msprop:Generator_RowEvHandlerName="DetailRowChangeEventHandler" msprop:Generator_RowDeletedName="DetailRowDeleted" msprop:Generator_RowDeletingName="DetailRowDeleting" msprop:Generator_RowEvArgName="DetailRowChangeEvent" msprop:Generator_TablePropName="Detail" msprop:Generator_RowChangedName="DetailRowChanged" msprop:Generator_RowChangingName="DetailRowChanging" msprop:Generator_TableClassName="DetailDataTable" msprop:Generator_RowClassName="DetailRow" msprop:Generator_TableVarName="tableDetail" msprop:Generator_UserTableName="Detail">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Id_Detail" msprop:Generator_ColumnPropNameInRow="Id_Detail" msprop:Generator_ColumnPropNameInTable="Id_DetailColumn" msprop:Generator_ColumnVarNameInTable="columnId_Detail" msprop:Generator_UserColumnName="Id_Detail" type="xs:int" />
+              <xs:element name="Id_Transaksi" msprop:Generator_ColumnPropNameInRow="Id_Transaksi" msprop:Generator_ColumnPropNameInTable="Id_TransaksiColumn" msprop:Generator_ColumnVarNameInTable="columnId_Transaksi" msprop:Generator_UserColumnName="Id_Transaksi" type="xs:int" minOccurs="0" />
+              <xs:element name="Nama_Barang" msprop:Generator_ColumnPropNameInRow="Nama_Barang" msprop:Generator_ColumnPropNameInTable="Nama_BarangColumn" msprop:Generator_ColumnVarNameInTable="columnNama_Barang" msprop:Generator_UserColumnName="Nama_Barang" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Jumlah" msprop:Generator_ColumnPropNameInRow="Jumlah" msprop:Generator_ColumnPropNameInTable="JumlahColumn" msprop:Generator_ColumnVarNameInTable="columnJumlah" msprop:Generator_UserColumnName="Jumlah" type="xs:int" minOccurs="0" />
+              <xs:element name="Harga_Satuan" msprop:Generator_ColumnPropNameInRow="Harga_Satuan" msprop:Generator_ColumnPropNameInTable="Harga_SatuanColumn" msprop:Generator_ColumnVarNameInTable="columnHarga_Satuan" msprop:Generator_UserColumnName="Harga_Satuan" type="xs:decimal" />
+              <xs:element name="Subtotal" msdata:ReadOnly="true" msprop:Generator_ColumnPropNameInRow="Subtotal" msprop:Generator_ColumnPropNameInTable="SubtotalColumn" msprop:Generator_ColumnVarNameInTable="columnSubtotal" msprop:Generator_UserColumnName="Subtotal" type="xs:decimal" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:Detail" />
+      <xs:field xpath="mstns:Id_Detail" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>
