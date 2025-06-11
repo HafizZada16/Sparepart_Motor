@@ -25,6 +25,7 @@ namespace Sparepart_Motor
 
         private void Form4_Load(object sender, EventArgs e)
         {
+            EnsureIndexes();
             LoadData();
         }
         private void ClearForm()
@@ -300,6 +301,79 @@ namespace Sparepart_Motor
                 }
             }
         }
+
+        private void btnAnalyze_Click(object sender, EventArgs e)
+        {
+            // Contoh query yang menggabungkan (JOIN) beberapa tabel.
+            // Query seperti ini akan sangat merasakan manfaat dari indeks yang kita buat.
+            // Misal: Melihat semua item barang untuk transaksi nomor 301
+            var heavyQuery = @"
+                SELECT 
+                    d.Id_Detail,
+                    t.Tanggal_Transaksi,
+                    s.Nama_Barang,
+                    d.Jumlah,
+                    d.Subtotal
+                FROM 
+                    dbo.Detail_Pembelian d
+                JOIN 
+                    dbo.Transaksi_Pembelian t ON d.Id_Transaksi = t.Id_Transaksi
+                JOIN 
+                    dbo.Sparepart s ON d.Id_Barang = s.Id_Barang
+                WHERE 
+                    d.Id_Transaksi = 301;";
+
+            // Panggil metode analisis
+            AnalyzeQuery(heavyQuery);
+        }
+
+        private void AnalyzeQuery(string sqlQuery)
+        {
+            // Menggunakan connectionString yang sudah ada di Form4
+            using (var conn = new SqlConnection(connectionString))
+            {
+                conn.InfoMessage += (s, e) => MessageBox.Show(e.Message, "STATISTICS INFO");
+                conn.Open();
+
+                var wrappedQuery = $@"
+                    SET STATISTICS IO ON;
+                    SET STATISTICS TIME ON;
+            
+                    {sqlQuery}
+            
+                    SET STATISTICS IO OFF;
+                    SET STATISTICS TIME OFF;";
+
+                using (var cmd = new SqlCommand(wrappedQuery, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        private void EnsureIndexes()
+        {
+            // Script T-SQL untuk memeriksa dan membuat indeks pada tabel Detail_Pembelian
+            var indexScript = @"
+                IF OBJECT_ID('dbo.Detail_Pembelian', 'U') IS NOT NULL
+                BEGIN
+                    IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name='idx_Detail_Id_Transaksi')
+                        CREATE NONCLUSTERED INDEX idx_Detail_Id_Transaksi ON dbo.Detail_Pembelian(Id_Transaksi);
+            
+                    IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name='idx_Detail_Id_Barang')
+                        CREATE NONCLUSTERED INDEX idx_Detail_Id_Barang ON dbo.Detail_Pembelian(Id_Barang);
+                END";
+
+            using (var conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                using (var cmd = new SqlCommand(indexScript, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {

@@ -47,6 +47,7 @@
             this.bttnRefresh = new System.Windows.Forms.Button();
             this.dgvSparepart = new System.Windows.Forms.DataGridView();
             this.btnImport = new System.Windows.Forms.Button();
+            this.btnAnalyze = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSparepart)).BeginInit();
             this.SuspendLayout();
@@ -237,11 +238,22 @@
             this.btnImport.UseVisualStyleBackColor = true;
             this.btnImport.Click += new System.EventHandler(this.btnImportExcel_Click);
             // 
+            // btnAnalyze
+            // 
+            this.btnAnalyze.Location = new System.Drawing.Point(713, 195);
+            this.btnAnalyze.Name = "btnAnalyze";
+            this.btnAnalyze.Size = new System.Drawing.Size(85, 42);
+            this.btnAnalyze.TabIndex = 7;
+            this.btnAnalyze.Text = "Analyze";
+            this.btnAnalyze.UseVisualStyleBackColor = true;
+            this.btnAnalyze.Click += new System.EventHandler(this.btnAnalyze_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(849, 563);
+            this.Controls.Add(this.btnAnalyze);
             this.Controls.Add(this.btnImport);
             this.Controls.Add(this.dgvSparepart);
             this.Controls.Add(this.bttnRefresh);
@@ -280,6 +292,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.Button btnImport;
+        private System.Windows.Forms.Button btnAnalyze;
     }
 }
 

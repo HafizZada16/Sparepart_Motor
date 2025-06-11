@@ -25,6 +25,7 @@ namespace Sparepart_Motor
 
         private void Form3_Load(object sender, EventArgs e)
         {
+            EnsureIndexes();
             LoadData();
         }
         private void ClearForm()
@@ -296,9 +297,72 @@ namespace Sparepart_Motor
             }
         }
 
+        private void btnAnalyze_Click(object sender, EventArgs e)
+        {
+            // Contoh query untuk mencari semua transaksi dengan total harga di atas 100000
+            // Query ini akan lebih cepat jika ada indeks pada Total_Harga,
+            // namun kita akan gunakan ini sebagai contoh.
+            var heavyQuery = "SELECT * FROM dbo.Transaksi_Pembelian WHERE Total_Harga > 100000;";
+
+            // Panggil metode analisis
+            AnalyzeQuery(heavyQuery);
+        }
+
+        private void AnalyzeQuery(string sqlQuery)
+        {
+            // Menggunakan connectionString yang sudah ada di Form3
+            using (var conn = new SqlConnection(connectionString))
+            {
+                conn.InfoMessage += (s, e) => MessageBox.Show(e.Message, "STATISTICS INFO");
+                conn.Open();
+
+                var wrappedQuery = $@"
+                    SET STATISTICS IO ON;
+                    SET STATISTICS TIME ON;
+            
+                    {sqlQuery}
+            
+                    SET STATISTICS IO OFF;
+                    SET STATISTICS TIME OFF;";
+
+                using (var cmd = new SqlCommand(wrappedQuery, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        private void EnsureIndexes()
+        {
+            // Script T-SQL untuk memeriksa dan membuat indeks pada tabel Transaksi_Pembelian
+            var indexScript = @"
+                IF OBJECT_ID('dbo.Transaksi_Pembelian', 'U') IS NOT NULL
+                BEGIN
+                    IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name='idx_Transaksi_Id_Pengguna')
+                        CREATE NONCLUSTERED INDEX idx_Transaksi_Id_Pengguna ON dbo.Transaksi_Pembelian(Id_Pengguna);
+            
+                    IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name='idx_Transaksi_Tanggal')
+                        CREATE NONCLUSTERED INDEX idx_Transaksi_Tanggal ON dbo.Transaksi_Pembelian(Tanggal_Transaksi);
+                END";
+
+            using (var conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                using (var cmd = new SqlCommand(indexScript, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         private void txtId_Transaksi_TextChanged(object sender, EventArgs e)
         {
 
-        }   
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

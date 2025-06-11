@@ -24,6 +24,7 @@ namespace Sparepart_Motor
         }
         private void Form2_Load(object sender, EventArgs e)
         {
+            EnsureIndexes();
             LoadData();
         }
         private void ClearForm()
@@ -292,6 +293,60 @@ namespace Sparepart_Motor
                 }
             }
         }
+
+        private void btnAnalyze_Click(object sender, EventArgs e)
+        {
+            // Contoh query untuk mencari semua sparepart yang namanya berawalan 'O' (misal: Oli)
+            var heavyQuery = "SELECT Nama_Barang, Harga FROM dbo.Sparepart WHERE Nama_Barang LIKE 'O%';";
+
+            // Panggil metode analisis
+            AnalyzeQuery(heavyQuery);
+        }
+
+        private void AnalyzeQuery(string sqlQuery)
+        {
+            using (var conn = new SqlConnection(connectionString))
+            {
+                conn.InfoMessage += (s, e) => MessageBox.Show(e.Message, "STATISTICS INFO");
+                conn.Open();
+
+                var wrappedQuery = $@"
+                    SET STATISTICS IO ON;
+                    SET STATISTICS TIME ON;
+            
+                    {sqlQuery}
+            
+                    SET STATISTICS IO OFF;
+                    SET STATISTICS TIME OFF;";
+
+                using (var cmd = new SqlCommand(wrappedQuery, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        private void EnsureIndexes()
+        {
+            // Script T-SQL untuk memeriksa dan membuat indeks pada tabel Sparepart
+            var indexScript = @"
+                IF OBJECT_ID('dbo.Sparepart', 'U') IS NOT NULL
+                BEGIN
+                    IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name='idx_Sparepart_Nama_Barang')
+                        CREATE NONCLUSTERED INDEX idx_Sparepart_Nama_Barang ON dbo.Sparepart(Nama_Barang);
+                END";
+
+            using (var conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                using (var cmd = new SqlCommand(indexScript, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {

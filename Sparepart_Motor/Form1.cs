@@ -25,6 +25,7 @@ namespace Sparepart_Motor
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            EnsureIndexes();
             LoadData();
         }
         private void ClearForm()
@@ -334,6 +335,60 @@ namespace Sparepart_Motor
                 catch (Exception ex)
                 {
                     MessageBox.Show("Terjadi kesalahan koneksi database: " + ex.Message, "Error Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void btnAnalyze_Click(object sender, EventArgs e)
+        {
+            // Contoh query 'berat' untuk dianalisis, mencari semua pengguna dengan nama berawalan 'A'
+            var heavyQuery = "SELECT Nama, Email, Telepon FROM dbo.Pengguna WHERE Nama LIKE 'A%';";
+            AnalyzeQuery(heavyQuery);
+        }
+
+        private void AnalyzeQuery(string sqlQuery)
+        {
+            using (var conn = new SqlConnection(connectionString))
+            {
+                // Menangkap pesan statistik dari SQL Server dan menampilkannya di MessageBox
+                conn.InfoMessage += (s, e) => MessageBox.Show(e.Message, "STATISTICS INFO");
+                conn.Open();
+
+                // Membungkus query asli dengan perintah SET STATISTICS
+                var wrappedQuery = $@"
+                    SET STATISTICS IO ON;
+                    SET STATISTICS TIME ON;
+            
+                    {sqlQuery}
+            
+                    SET STATISTICS IO OFF;
+                    SET STATISTICS TIME OFF;";
+
+                using (var cmd = new SqlCommand(wrappedQuery, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        private void EnsureIndexes()
+        {
+            // Script T-SQL untuk memeriksa dan membuat indeks jika belum ada
+            var indexScript = @"
+                IF OBJECT_ID('dbo.Pengguna', 'U') IS NOT NULL
+                BEGIN
+                    IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name='idx_Pengguna_Nama')
+                        CREATE NONCLUSTERED INDEX idx_Pengguna_Nama ON dbo.Pengguna(Nama);
+                    IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name='idx_Pengguna_Email')
+                        CREATE NONCLUSTERED INDEX idx_Pengguna_Email ON dbo.Pengguna(Email);
+                END";
+
+            using (var conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                using (var cmd = new SqlCommand(indexScript, conn))
+                {
+                    cmd.ExecuteNonQuery();
                 }
             }
         }
