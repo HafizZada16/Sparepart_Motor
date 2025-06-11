@@ -365,8 +365,6 @@ namespace Sparepart_Motor
                         dt.Rows.Add(dataRow);
                     }
 
-                    // --- PERBAIKAN DIMULAI DI SINI ---
-                    // 1. Tampilkan PreviewForm dan TANGKAP HASILNYA
                     PreviewForm preview = new PreviewForm(dt, "Pratinjau Impor dari File Excel");
                     DialogResult result = preview.ShowDialog();
 
@@ -385,7 +383,6 @@ namespace Sparepart_Motor
             }
         }
 
-        // TAMBAHKAN METODE BARU INI DI DALAM KELAS Form1
         private void ProsesImportKeDatabase(DataTable dt)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))

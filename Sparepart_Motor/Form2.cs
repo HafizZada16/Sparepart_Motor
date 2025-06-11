@@ -297,18 +297,15 @@ namespace Sparepart_Motor
             // Menggunakan connectionString yang ada di Form2
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                // 1. Deklarasikan transaksi di luar 'try' dengan nilai awal null
                 SqlTransaction transaction = null;
                 try
                 {
                     conn.Open();
-                    // 2. Beri nilai pada variabel transaksi di dalam 'try'
                     transaction = conn.BeginTransaction();
                     int jumlahBerhasil = 0;
 
                     foreach (DataRow row in dt.Rows)
                     {
-                        // Panggil Stored Procedure untuk membuat Sparepart baru
                         using (SqlCommand cmd = new SqlCommand("sp_CreateSparepart", conn, transaction))
                         {
                             cmd.CommandType = CommandType.StoredProcedure;
@@ -323,7 +320,6 @@ namespace Sparepart_Motor
                         }
                     }
 
-                    // 3. Jika semua loop berhasil, COMMIT untuk menyimpan permanen
                     transaction.Commit();
                     MessageBox.Show($"Proses impor selesai. Berhasil: {jumlahBerhasil} baris.", "Impor Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }

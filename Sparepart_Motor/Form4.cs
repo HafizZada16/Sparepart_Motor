@@ -329,9 +329,6 @@ namespace Sparepart_Motor
 
         private void btnAnalyze_Click(object sender, EventArgs e)
         {
-            // Contoh query yang menggabungkan (JOIN) beberapa tabel.
-            // Query seperti ini akan sangat merasakan manfaat dari indeks yang kita buat.
-            // Misal: Melihat semua item barang untuk transaksi nomor 301
             var heavyQuery = @"
                 SELECT 
                     d.Id_Detail,

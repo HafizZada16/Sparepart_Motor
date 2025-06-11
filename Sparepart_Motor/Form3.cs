@@ -372,9 +372,6 @@ namespace Sparepart_Motor
 
         private void btnAnalyze_Click(object sender, EventArgs e)
         {
-            // Contoh query untuk mencari semua transaksi dengan total harga di atas 100000
-            // Query ini akan lebih cepat jika ada indeks pada Total_Harga,
-            // namun kita akan gunakan ini sebagai contoh.
             var heavyQuery = "SELECT * FROM dbo.Transaksi_Pembelian WHERE Total_Harga > 100000;";
 
             // Panggil metode analisis
