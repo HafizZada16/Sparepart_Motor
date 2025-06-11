@@ -84,7 +84,7 @@
             this.Controls.Add(this.btnSparepart);
             this.Controls.Add(this.btnPengguna);
             this.Name = "Beranda";
-            this.Text = "Form3";
+            this.Text = "Beranda";
             this.ResumeLayout(false);
 
         }
